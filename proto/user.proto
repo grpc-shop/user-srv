@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = "./user";
+
+service User {
+  rpc CreateUser (CreateUserReq)returns (CreateUserReply){}
+}
+
+
+enum Code {
+  NOKnow = 0;
+  Success = 200;
+  CreateErr = 20001;
+}
+
+message CreateUserReq {
+
+}
+
+message CreateUserReply {
+
+}
+
+
