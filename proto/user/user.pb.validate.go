@@ -41,6 +41,14 @@ func (m *CreateUserReq) Validate() error {
 		return nil
 	}
 
+	// no validation rules for Name
+
+	// no validation rules for Email
+
+	// no validation rules for Password
+
+	// no validation rules for PasswordAgain
+
 	return nil
 }
 
@@ -106,6 +114,20 @@ func (m *CreateUserReply) Validate() error {
 		return nil
 	}
 
+	// no validation rules for Code
+
+	// no validation rules for Msg
+
+	if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreateUserReplyValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -162,3 +184,72 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateUserReplyValidationError{}
+
+// Validate checks the field values on CreateUserReplyUser with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateUserReplyUser) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for UserId
+
+	return nil
+}
+
+// CreateUserReplyUserValidationError is the validation error returned by
+// CreateUserReplyUser.Validate if the designated constraints aren't met.
+type CreateUserReplyUserValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateUserReplyUserValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateUserReplyUserValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateUserReplyUserValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateUserReplyUserValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateUserReplyUserValidationError) ErrorName() string {
+	return "CreateUserReplyUserValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateUserReplyUserValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateUserReplyUser.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateUserReplyUserValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateUserReplyUserValidationError{}
