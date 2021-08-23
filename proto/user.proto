@@ -10,15 +10,23 @@ service User {
 enum Code {
   NOKnow = 0;
   Success = 200;
-  CreateErr = 20001;
+  CreateErr = 30001;
 }
 
 message CreateUserReq {
-
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string password_again = 4;
 }
 
 message CreateUserReply {
-
+  Code code = 1;
+  string msg = 2;
+  message user {
+    int64  user_id = 1;
+  }
+  user data = 3;
 }
 
 
